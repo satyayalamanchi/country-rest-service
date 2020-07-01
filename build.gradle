@@ -1,0 +1,49 @@
+plugins {
+    id 'org.springframework.boot' version '2.3.1.RELEASE'
+    id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+    id 'java'
+}
+
+group = 'com.countries'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+    mavenLocal()
+	mavenCentral()
+}
+
+dependencies {
+
+    // Springframework
+    compile 'org.springframework.boot:spring-boot-configuration-processor:2.1.5.RELEASE'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    compile('org.springframework.boot:spring-boot-starter-test') {
+        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+    }
+    //Utils
+    compile 'com.jayway.jsonpath:json-path:2.0.0'
+    compile 'commons-io:commons-io:2.6'
+    // Annotation
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+    //ApacheHTTP
+    compile 'org.apache.httpcomponents:httpclient:4.5.12'
+
+}
+
+// JUnit configuration
+test {
+    useJUnitPlatform()
+    doFirst {
+        systemProperty "name", System.properties['name']
+        systemProperty "codes", System.properties['codes']
+    }
+}
